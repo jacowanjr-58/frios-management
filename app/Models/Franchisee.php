@@ -37,6 +37,10 @@ class Franchisee extends Model
         return $this->hasMany(Invoice::class);
     }
 
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
+    }
     // ...and any other relationships you need
 }
 

@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+
 class StoreUserRequest extends FormRequest
 {
     /**
@@ -21,8 +22,8 @@ public function rules()
         'name'          => 'required|string|max:255',
         'email'         => 'required|email|unique:users,email',
         'password'      => 'required|string|min:8|confirmed',
-        'franchisee_id' => 'required|exists:franchisees,id',
-        'role'          => 'required|in:super_admin,corporate_admin,franchise_admin,staff',
+       /*  'franchisee_id' => 'required|exists:franchisees,id', */
+        'role'          => 'required|in:super_admin,corporate_admin,franchise_admin,franchise_staff',
     ];
 }
 

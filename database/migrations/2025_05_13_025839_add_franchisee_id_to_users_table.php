@@ -18,7 +18,7 @@ return new class extends Migration
               ->constrained()
               ->onDelete('set null');
         // Optionally add a role field:
-        $table->enum('role',['super_admin','corporate_admin','franchise_admin','staff'])
+        $table->enum('role',['super_admin','corporate_admin','franchise_admin','franchise_staff'])
               ->default('staff')
               ->after('franchisee_id');
     });

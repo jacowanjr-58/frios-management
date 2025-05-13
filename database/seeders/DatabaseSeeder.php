@@ -5,6 +5,9 @@ namespace Database\Seeders;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Role;
+use Database\Seeders\FlavorCategorySeeder;
+
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,16 +16,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
 
     // other seeders...
+    $this->call(PermissionSeeder::class);
+    $this->call(RolesAndSuperAdminSeeder::class);
+    $this->call(FranchiseeAdminSeeder::class);
     $this->call(FlavorCategorySeeder::class);
-    // if you kept FlavorCategoryOptionSeeder, you could chain it here
 
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+
     }
 }

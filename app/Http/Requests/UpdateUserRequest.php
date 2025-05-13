@@ -3,28 +3,27 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class UpdateUserRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
-  public function authorize()
-{
-    return in_array(auth()->user()->role, ['super_admin','corporate_admin']);
-}
+    public function authorize()
+    {
+        return Auth::check() && Auth::user()->hasAnyRole(['super_admin', 'corporate_admin']);
+    }
 
-public function rules()
-{
-    $userId = $this->route('user')->id;
+    public function rules()
+    {
+        $userId = is_object($this->route('user')) ? $this->route('user')->id : $this->route('user');
 
-    return [
-        'name'          => 'required|string|max:255',
-        'email'         => "required|email|unique:users,email,{$userId}",
-        'password'      => 'nullable|string|min:8|confirmed',
-        'franchisee_id' => 'required|exists:franchisees,id',
-        'role'          => 'required|in:super_admin,corporate_admin,franchise_admin,staff',
-    ];
-}
-
+        return [
+            'name'          => 'required|string|max:255',
+            'email'         => "required|email|unique:users,email,{$userId}",
+            'password'      => 'nullable|string|min:8|confirmed',
+            'franchisee_id' => in_array($this->input('role'), ['franchise_admin', 'franchise_staff'])
+                ? 'required|exists:franchisees,id'
+                : 'nullable',
+            'role'          => 'required|in:super_admin,corporate_admin,franchise_admin,franchise_staff',
+        ];
+    }
 }
