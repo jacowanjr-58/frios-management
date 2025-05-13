@@ -15,6 +15,11 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
+    // other seeders...
+    $this->call(FlavorCategorySeeder::class);
+    // if you kept FlavorCategoryOptionSeeder, you could chain it here
+
+
         User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',

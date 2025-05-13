@@ -18,11 +18,15 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+    'name','email','password',
+    'franchisee_id','role',
+    // …any other custom fields
     ];
 
+    public function franchisee()
+    {
+        return $this->belongsTo(Franchisee::class);
+    }
     /**
      * The attributes that should be hidden for serialization.
      *
