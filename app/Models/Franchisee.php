@@ -39,7 +39,7 @@ class Franchisee extends Model
 
     public function users()
     {
-        return $this->belongsToMany(User::class);
+       return $this->belongsToMany(\App\Models\User::class, 'franchise_user');
     }
     // ...and any other relationships you need
 }

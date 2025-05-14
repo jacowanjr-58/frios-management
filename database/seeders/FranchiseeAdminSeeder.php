@@ -105,427 +105,427 @@ class FranchiseeAdminSeeder extends Seeder
             ['email' => 'Coloradosprings@friospops.com'],
             ['name' => 'Eric Signor', 'password' => null]
         );
-        $user_Coloradosprings_friospops_com->assignRole('Franchisee_admin');
+        $user_Coloradosprings_friospops_com->assignRole('Franchise_admin');
 
         $user_GilbertAZ_friospops_com = \App\Models\User::updateOrCreate(
             ['email' => 'GilbertAZ@friospops.com'],
             ['name' => 'Brandelyn Hughes', 'password' => null]
         );
-        $user_GilbertAZ_friospops_com->assignRole('Franchisee_admin');
+        $user_GilbertAZ_friospops_com->assignRole('Franchise_admin');
 
         $user_KC_friospops_com = \App\Models\User::updateOrCreate(
             ['email' => 'KC@friospops.com'],
             ['name' => 'KC Carlson', 'password' => null]
         );
-        $user_KC_friospops_com->assignRole('Franchisee_admin');
+        $user_KC_friospops_com->assignRole('Franchise_admin');
 
         $user_Leesa_friospops_com = \App\Models\User::updateOrCreate(
             ['email' => 'Leesa@friospops.com'],
             ['name' => 'Leesa Wolf', 'password' => null]
         );
-        $user_Leesa_friospops_com->assignRole('Franchisee_admin');
+        $user_Leesa_friospops_com->assignRole('Franchise_admin');
 
         $user_LindaS_friospops_com = \App\Models\User::updateOrCreate(
             ['email' => 'LindaS@friospops.com'],
             ['name' => 'Linda Se Huynh', 'password' => null]
         );
-        $user_LindaS_friospops_com->assignRole('Franchisee_admin');
+        $user_LindaS_friospops_com->assignRole('Franchise_admin');
 
         $user_Matthew_macdonald_friospops_com = \App\Models\User::updateOrCreate(
             ['email' => 'Matthew.macdonald@friospops.com'],
             ['name' => 'Matthew Macdonald', 'password' => null]
         );
-        $user_Matthew_macdonald_friospops_com->assignRole('Franchisee_admin');
+        $user_Matthew_macdonald_friospops_com->assignRole('Franchise_admin');
 
         $user_NWPhilly_friospops_com = \App\Models\User::updateOrCreate(
             ['email' => 'NWPhilly@friospops.com'],
             ['name' => 'Amanda and Rob Kumor', 'password' => null]
         );
-        $user_NWPhilly_friospops_com->assignRole('Franchisee_admin');
+        $user_NWPhilly_friospops_com->assignRole('Franchise_admin');
 
         $user_Tyler_friospops_com = \App\Models\User::updateOrCreate(
             ['email' => 'Tyler@friospops.com'],
             ['name' => 'Brandy Weidner', 'password' => null]
         );
-        $user_Tyler_friospops_com->assignRole('Franchisee_admin');
+        $user_Tyler_friospops_com->assignRole('Franchise_admin');
 
         $user_amy_winslow_friospops_com = \App\Models\User::updateOrCreate(
             ['email' => 'amy.winslow@friospops.com'],
             ['name' => 'Amy Winslow', 'password' => null]
         );
-        $user_amy_winslow_friospops_com->assignRole('Franchisee_admin');
+        $user_amy_winslow_friospops_com->assignRole('Franchise_admin');
 
         $user_anderson_friospops_com = \App\Models\User::updateOrCreate(
             ['email' => 'anderson@friospops.com'],
             ['name' => 'Blake Daniel SC', 'password' => null]
         );
-        $user_anderson_friospops_com->assignRole('Franchisee_admin');
+        $user_anderson_friospops_com->assignRole('Franchise_admin');
 
         $user_angela_friospops_com = \App\Models\User::updateOrCreate(
             ['email' => 'angela@friospops.com'],
             ['name' => 'Angela Busby', 'password' => null]
         );
-        $user_angela_friospops_com->assignRole('Franchisee_admin');
+        $user_angela_friospops_com->assignRole('Franchise_admin');
 
         $user_atlanta_friospops_com = \App\Models\User::updateOrCreate(
             ['email' => 'atlanta@friospops.com'],
             ['name' => 'Dee Dothard', 'password' => null]
         );
-        $user_atlanta_friospops_com->assignRole('Franchisee_admin');
+        $user_atlanta_friospops_com->assignRole('Franchise_admin');
 
         $user_brandon_friospops_com = \App\Models\User::updateOrCreate(
             ['email' => 'brandon@friospops.com'],
             ['name' => 'Brandon Anderton', 'password' => null]
         );
-        $user_brandon_friospops_com->assignRole('Franchisee_admin');
+        $user_brandon_friospops_com->assignRole('Franchise_admin');
 
         $user_brett_friospops_com = \App\Models\User::updateOrCreate(
             ['email' => 'brett@friospops.com'],
             ['name' => 'Brett McKee', 'password' => null]
         );
-        $user_brett_friospops_com->assignRole('Franchisee_admin');
+        $user_brett_friospops_com->assignRole('Franchise_admin');
 
         $user_buckeyetreats_friospops_com = \App\Models\User::updateOrCreate(
             ['email' => 'buckeyetreats@friospops.com'],
             ['name' => 'Augustina DeLeon', 'password' => null]
         );
-        $user_buckeyetreats_friospops_com->assignRole('Franchisee_admin');
+        $user_buckeyetreats_friospops_com->assignRole('Franchise_admin');
 
         $user_chelsea_friospops_com = \App\Models\User::updateOrCreate(
             ['email' => 'chelsea@friospops.com'],
             ['name' => 'Chelsea Metzger', 'password' => null]
         );
-        $user_chelsea_friospops_com->assignRole('Franchisee_admin');
+        $user_chelsea_friospops_com->assignRole('Franchise_admin');
 
         $user_cherryhill_friospops_com = \App\Models\User::updateOrCreate(
             ['email' => 'cherryhill@friospops.com'],
             ['name' => 'Vince Conti', 'password' => null]
         );
-        $user_cherryhill_friospops_com->assignRole('Franchisee_admin');
+        $user_cherryhill_friospops_com->assignRole('Franchise_admin');
 
         $user_chuck_friospops_com = \App\Models\User::updateOrCreate(
             ['email' => 'chuck@friospops.com'],
             ['name' => 'Janet Glausier', 'password' => null]
         );
-        $user_chuck_friospops_com->assignRole('Franchisee_admin');
+        $user_chuck_friospops_com->assignRole('Franchise_admin');
 
         $user_clearwater_friospops_com = \App\Models\User::updateOrCreate(
             ['email' => 'clearwater@friospops.com'],
             ['name' => 'Stephanie Ash', 'password' => null]
         );
-        $user_clearwater_friospops_com->assignRole('Franchisee_admin');
+        $user_clearwater_friospops_com->assignRole('Franchise_admin');
 
         $user_clevelandsw_friospops_com = \App\Models\User::updateOrCreate(
             ['email' => 'clevelandsw@friospops.com'],
             ['name' => 'Barbie Estrada', 'password' => null]
         );
-        $user_clevelandsw_friospops_com->assignRole('Franchisee_admin');
+        $user_clevelandsw_friospops_com->assignRole('Franchise_admin');
 
         $user_cliff_friospops_com = \App\Models\User::updateOrCreate(
             ['email' => 'cliff@friospops.com'],
             ['name' => 'Cliff Kennedy', 'password' => null]
         );
-        $user_cliff_friospops_com->assignRole('Franchisee_admin');
+        $user_cliff_friospops_com->assignRole('Franchise_admin');
 
         $user_cordova_friospops_com = \App\Models\User::updateOrCreate(
             ['email' => 'cordova@friospops.com'],
             ['name' => 'Carla Tellez', 'password' => null]
         );
-        $user_cordova_friospops_com->assignRole('Franchisee_admin');
+        $user_cordova_friospops_com->assignRole('Franchise_admin');
 
         $user_cory_friospops_com = \App\Models\User::updateOrCreate(
             ['email' => 'cory@friospops.com'],
             ['name' => 'Cory Nuckolls', 'password' => null]
         );
-        $user_cory_friospops_com->assignRole('Franchisee_admin');
+        $user_cory_friospops_com->assignRole('Franchise_admin');
 
         $user_dallas_friospops_com = \App\Models\User::updateOrCreate(
             ['email' => 'dallas@friospops.com'],
             ['name' => 'Keisha Reeder', 'password' => null]
         );
-        $user_dallas_friospops_com->assignRole('Franchisee_admin');
+        $user_dallas_friospops_com->assignRole('Franchise_admin');
 
         $user_darryl_friospops_com = \App\Models\User::updateOrCreate(
             ['email' => 'darryl@friospops.com'],
             ['name' => 'Darryl (DJ) Morris', 'password' => null]
         );
-        $user_darryl_friospops_com->assignRole('Franchisee_admin');
+        $user_darryl_friospops_com->assignRole('Franchise_admin');
 
         $user_dee_friospops_com = \App\Models\User::updateOrCreate(
             ['email' => 'dee@friospops.com'],
             ['name' => 'Dee Dothard', 'password' => null]
         );
-        $user_dee_friospops_com->assignRole('Franchisee_admin');
+        $user_dee_friospops_com->assignRole('Franchise_admin');
 
         $user_delawarebeaches_friospops_com = \App\Models\User::updateOrCreate(
             ['email' => 'delawarebeaches@friospops.com'],
             ['name' => 'Kristi Sutliffe', 'password' => null]
         );
-        $user_delawarebeaches_friospops_com->assignRole('Franchisee_admin');
+        $user_delawarebeaches_friospops_com->assignRole('Franchise_admin');
 
         $user_desiree_friospops_com = \App\Models\User::updateOrCreate(
             ['email' => 'desiree@friospops.com'],
             ['name' => 'Desiree Cordova', 'password' => null]
         );
-        $user_desiree_friospops_com->assignRole('Franchisee_admin');
+        $user_desiree_friospops_com->assignRole('Franchise_admin');
 
         $user_destin_friospops_com = \App\Models\User::updateOrCreate(
             ['email' => 'destin@friospops.com'],
             ['name' => 'Destin Mince', 'password' => null]
         );
-        $user_destin_friospops_com->assignRole('Franchisee_admin');
+        $user_destin_friospops_com->assignRole('Franchise_admin');
 
         $user_donna_friospops_com = \App\Models\User::updateOrCreate(
             ['email' => 'donna@friospops.com'],
             ['name' => 'Scott Grier', 'password' => null]
         );
-        $user_donna_friospops_com->assignRole('Franchisee_admin');
+        $user_donna_friospops_com->assignRole('Franchise_admin');
 
         $user_farmersbranch_friospops_com = \App\Models\User::updateOrCreate(
             ['email' => 'farmersbranch@friospops.com'],
             ['name' => 'Priya Kumar', 'password' => null]
         );
-        $user_farmersbranch_friospops_com->assignRole('Franchisee_admin');
+        $user_farmersbranch_friospops_com->assignRole('Franchise_admin');
 
         $user_flowermound_friospops_com = \App\Models\User::updateOrCreate(
             ['email' => 'flowermound@friospops.com'],
             ['name' => 'Matthew Gregory', 'password' => null]
         );
-        $user_flowermound_friospops_com->assignRole('Franchisee_admin');
+        $user_flowermound_friospops_com->assignRole('Franchise_admin');
 
         $user_funmi_friospops_com = \App\Models\User::updateOrCreate(
             ['email' => 'funmi@friospops.com'],
             ['name' => 'Funmi Oredope', 'password' => null]
         );
-        $user_funmi_friospops_com->assignRole('Franchisee_admin');
+        $user_funmi_friospops_com->assignRole('Franchise_admin');
 
         $user_galveston_friospops_com = \App\Models\User::updateOrCreate(
             ['email' => 'galveston@friospops.com'],
             ['name' => 'Brandelyn Hughes', 'password' => null]
         );
-        $user_galveston_friospops_com->assignRole('Franchisee_admin');
+        $user_galveston_friospops_com->assignRole('Franchise_admin');
 
         $user_jcowan_friospops_com = \App\Models\User::updateOrCreate(
             ['email' => 'jcowan@friospops.com'],
             ['name' => 'John Cowan', 'password' => null]
         );
-        $user_jcowan_friospops_com->assignRole('Franchisee_admin');
+        $user_jcowan_friospops_com->assignRole('Franchise_admin');
 
         $user_jeremy_friospops_com = \App\Models\User::updateOrCreate(
             ['email' => 'jeremy@friospops.com'],
             ['name' => 'Jeremy Adams', 'password' => null]
         );
-        $user_jeremy_friospops_com->assignRole('Franchisee_admin');
+        $user_jeremy_friospops_com->assignRole('Franchise_admin');
 
         $user_jim_friospops_com = \App\Models\User::updateOrCreate(
             ['email' => 'jim@friospops.com'],
             ['name' => 'Jim Wohlers', 'password' => null]
         );
-        $user_jim_friospops_com->assignRole('Franchisee_admin');
+        $user_jim_friospops_com->assignRole('Franchise_admin');
 
         $user_joseph_friospops_com = \App\Models\User::updateOrCreate(
             ['email' => 'joseph@friospops.com'],
             ['name' => 'Joseph Thomas', 'password' => null]
         );
-        $user_joseph_friospops_com->assignRole('Franchisee_admin');
+        $user_joseph_friospops_com->assignRole('Franchise_admin');
 
         $user_julie_friospops_com = \App\Models\User::updateOrCreate(
             ['email' => 'julie@friospops.com'],
             ['name' => 'Julie Klinetobe', 'password' => null]
         );
-        $user_julie_friospops_com->assignRole('Franchisee_admin');
+        $user_julie_friospops_com->assignRole('Franchise_admin');
 
         $user_karen_friospops_com = \App\Models\User::updateOrCreate(
             ['email' => 'karen@friospops.com'],
             ['name' => 'Karen Hudson', 'password' => null]
         );
-        $user_karen_friospops_com->assignRole('Franchisee_admin');
+        $user_karen_friospops_com->assignRole('Franchise_admin');
 
         $user_kerri_friospops_com = \App\Models\User::updateOrCreate(
             ['email' => 'kerri@friospops.com'],
             ['name' => 'Kerri Raughton', 'password' => null]
         );
-        $user_kerri_friospops_com->assignRole('Franchisee_admin');
+        $user_kerri_friospops_com->assignRole('Franchise_admin');
 
         $user_kirk_friospops_com = \App\Models\User::updateOrCreate(
             ['email' => 'kirk@friospops.com'],
             ['name' => 'Kirk Kersey', 'password' => null]
         );
-        $user_kirk_friospops_com->assignRole('Franchisee_admin');
+        $user_kirk_friospops_com->assignRole('Franchise_admin');
 
         $user_kristy_friospops_com = \App\Models\User::updateOrCreate(
             ['email' => 'kristy@friospops.com'],
             ['name' => 'Kristy Keiffer', 'password' => null]
         );
-        $user_kristy_friospops_com->assignRole('Franchisee_admin');
+        $user_kristy_friospops_com->assignRole('Franchise_admin');
 
         $user_lbkevents_friospops_com = \App\Models\User::updateOrCreate(
             ['email' => 'lbkevents@friospops.com'],
             ['name' => 'Chance Britt', 'password' => null]
         );
-        $user_lbkevents_friospops_com->assignRole('Franchisee_admin');
+        $user_lbkevents_friospops_com->assignRole('Franchise_admin');
 
         $user_leesa_friospops_com = \App\Models\User::updateOrCreate(
             ['email' => 'leesa@friospops.com'],
             ['name' => 'Leesa Wolf', 'password' => null]
         );
-        $user_leesa_friospops_com->assignRole('Franchisee_admin');
+        $user_leesa_friospops_com->assignRole('Franchise_admin');
 
         $user_matt_collins_friospops_com = \App\Models\User::updateOrCreate(
             ['email' => 'matt.collins@friospops.com'],
             ['name' => 'Matthew Collins', 'password' => null]
         );
-        $user_matt_collins_friospops_com->assignRole('Franchisee_admin');
+        $user_matt_collins_friospops_com->assignRole('Franchise_admin');
 
         $user_michael_friospops_com = \App\Models\User::updateOrCreate(
             ['email' => 'michael@friospops.com'],
             ['name' => 'Michael Weidenbach', 'password' => null]
         );
-        $user_michael_friospops_com->assignRole('Franchisee_admin');
+        $user_michael_friospops_com->assignRole('Franchise_admin');
 
         $user_michaellewis_friospops_com = \App\Models\User::updateOrCreate(
             ['email' => 'michaellewis@friospops.com'],
             ['name' => 'Michael Lewis', 'password' => null]
         );
-        $user_michaellewis_friospops_com->assignRole('Franchisee_admin');
+        $user_michaellewis_friospops_com->assignRole('Franchise_admin');
 
         $user_mike_friospops_com = \App\Models\User::updateOrCreate(
             ['email' => 'mike@friospops.com'],
             ['name' => 'Mike Brown', 'password' => null]
         );
-        $user_mike_friospops_com->assignRole('Franchisee_admin');
+        $user_mike_friospops_com->assignRole('Franchise_admin');
 
         $user_montgomery_friospops_com = \App\Models\User::updateOrCreate(
             ['email' => 'montgomery@friospops.com'],
             ['name' => 'Jason Nguyen', 'password' => null]
         );
-        $user_montgomery_friospops_com->assignRole('Franchisee_admin');
+        $user_montgomery_friospops_com->assignRole('Franchise_admin');
 
         $user_morris_friospops_com = \App\Models\User::updateOrCreate(
             ['email' => 'morris@friospops.com'],
             ['name' => 'Morris Smith', 'password' => null]
         );
-        $user_morris_friospops_com->assignRole('Franchisee_admin');
+        $user_morris_friospops_com->assignRole('Franchise_admin');
 
         $user_nate_friospops_com = \App\Models\User::updateOrCreate(
             ['email' => 'nate@friospops.com'],
             ['name' => 'Nathan Blankenship', 'password' => null]
         );
-        $user_nate_friospops_com->assignRole('Franchisee_admin');
+        $user_nate_friospops_com->assignRole('Franchise_admin');
 
         $user_oceansprings_friospops_com = \App\Models\User::updateOrCreate(
             ['email' => 'oceansprings@friospops.com'],
             ['name' => 'Jarred Cook', 'password' => null]
         );
-        $user_oceansprings_friospops_com->assignRole('Franchisee_admin');
+        $user_oceansprings_friospops_com->assignRole('Franchise_admin');
 
         $user_omaha_friospops_com = \App\Models\User::updateOrCreate(
             ['email' => 'omaha@friospops.com'],
             ['name' => 'Chris Alford', 'password' => null]
         );
-        $user_omaha_friospops_com->assignRole('Franchisee_admin');
+        $user_omaha_friospops_com->assignRole('Franchise_admin');
 
         $user_raliegh_friospops_com = \App\Models\User::updateOrCreate(
             ['email' => 'raliegh@friospops.com'],
             ['name' => 'Leisa Bolles Jessica Bales', 'password' => null]
         );
-        $user_raliegh_friospops_com->assignRole('Franchisee_admin');
+        $user_raliegh_friospops_com->assignRole('Franchise_admin');
 
         $user_robin_friospops_com = \App\Models\User::updateOrCreate(
             ['email' => 'robin@friospops.com'],
             ['name' => 'Robin Bridgeman', 'password' => null]
         );
-        $user_robin_friospops_com->assignRole('Franchisee_admin');
+        $user_robin_friospops_com->assignRole('Franchise_admin');
 
         $user_rochester_friospops_com = \App\Models\User::updateOrCreate(
             ['email' => 'rochester@friospops.com'],
             ['name' => 'Nick Stebbins', 'password' => null]
         );
-        $user_rochester_friospops_com->assignRole('Franchisee_admin');
+        $user_rochester_friospops_com->assignRole('Franchise_admin');
 
         $user_romin_friospops_com = \App\Models\User::updateOrCreate(
             ['email' => 'romin@friospops.com'],
             ['name' => 'Romin Patel', 'password' => null]
         );
-        $user_romin_friospops_com->assignRole('Franchisee_admin');
+        $user_romin_friospops_com->assignRole('Franchise_admin');
 
         $user_sarah_friospops_com = \App\Models\User::updateOrCreate(
             ['email' => 'sarah@friospops.com'],
             ['name' => 'Sarah Ables', 'password' => null]
         );
-        $user_sarah_friospops_com->assignRole('Franchisee_admin');
+        $user_sarah_friospops_com->assignRole('Franchise_admin');
 
         $user_sarasota_friospops_com = \App\Models\User::updateOrCreate(
             ['email' => 'sarasota@friospops.com'],
             ['name' => 'Shaune Scott', 'password' => null]
         );
-        $user_sarasota_friospops_com->assignRole('Franchisee_admin');
+        $user_sarasota_friospops_com->assignRole('Franchise_admin');
 
         $user_sonya_friospops_com = \App\Models\User::updateOrCreate(
             ['email' => 'sonya@friospops.com'],
             ['name' => 'Sonya Matthews', 'password' => null]
         );
-        $user_sonya_friospops_com->assignRole('Franchisee_admin');
+        $user_sonya_friospops_com->assignRole('Franchise_admin');
 
         $user_stcharles_friospops_com = \App\Models\User::updateOrCreate(
             ['email' => 'stcharles@friospops.com'],
             ['name' => 'Kemet Hetep', 'password' => null]
         );
-        $user_stcharles_friospops_com->assignRole('Franchisee_admin');
+        $user_stcharles_friospops_com->assignRole('Franchise_admin');
 
         $user_stcroix_friospops_com = \App\Models\User::updateOrCreate(
             ['email' => 'stcroix@friospops.com'],
             ['name' => 'Tamar Brown', 'password' => null]
         );
-        $user_stcroix_friospops_com->assignRole('Franchisee_admin');
+        $user_stcroix_friospops_com->assignRole('Franchise_admin');
 
         $user_stephen_friospops_com = \App\Models\User::updateOrCreate(
             ['email' => 'stephen@friospops.com'],
             ['name' => 'Stephen Flaherty', 'password' => null]
         );
-        $user_stephen_friospops_com->assignRole('Franchisee_admin');
+        $user_stephen_friospops_com->assignRole('Franchise_admin');
 
         $user_summerville_friospops_com = \App\Models\User::updateOrCreate(
             ['email' => 'summerville@friospops.com'],
             ['name' => 'Joyce Green', 'password' => null]
         );
-        $user_summerville_friospops_com->assignRole('Franchisee_admin');
+        $user_summerville_friospops_com->assignRole('Franchise_admin');
 
         $user_suwanee_friospops_com = \App\Models\User::updateOrCreate(
             ['email' => 'suwanee@friospops.com'],
             ['name' => 'Casey Robuck', 'password' => null]
         );
-        $user_suwanee_friospops_com->assignRole('Franchisee_admin');
+        $user_suwanee_friospops_com->assignRole('Franchise_admin');
 
         $user_tabitha_friospops_com = \App\Models\User::updateOrCreate(
             ['email' => 'tabitha@friospops.com'],
             ['name' => 'Tabitha Garcia', 'password' => null]
         );
-        $user_tabitha_friospops_com->assignRole('Franchisee_admin');
+        $user_tabitha_friospops_com->assignRole('Franchise_admin');
 
         $user_tampa_friospops_com = \App\Models\User::updateOrCreate(
             ['email' => 'tampa@friospops.com'],
             ['name' => 'Sahune Scott', 'password' => null]
         );
-        $user_tampa_friospops_com->assignRole('Franchisee_admin');
+        $user_tampa_friospops_com->assignRole('Franchise_admin');
 
         $user_tampa_friospops_com = \App\Models\User::updateOrCreate(
             ['email' => 'tampa@friospops.com'],
             ['name' => 'Shaune Scott', 'password' => null]
         );
-        $user_tampa_friospops_com->assignRole('Franchisee_admin');
+        $user_tampa_friospops_com->assignRole('Franchise_admin');
 
         $user_tiffanyvines_friospops_com = \App\Models\User::updateOrCreate(
             ['email' => 'tiffanyvines@friospops.com'],
             ['name' => 'Tiffany Vines', 'password' => null]
         );
-        $user_tiffanyvines_friospops_com->assignRole('Franchisee_admin');
+        $user_tiffanyvines_friospops_com->assignRole('Franchise_admin');
 
         $user_westvalley_friospops_com = \App\Models\User::updateOrCreate(
             ['email' => 'westvalley@friospops.com'],
             ['name' => 'Stephanie Tipton', 'password' => null]
         );
-        $user_westvalley_friospops_com->assignRole('Franchisee_admin');
+        $user_westvalley_friospops_com->assignRole('Franchise_admin');
 
         // Link users to Franchisees
         $user_Coloradosprings_friospops_com->Franchisees()->syncWithoutDetaching(

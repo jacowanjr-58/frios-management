@@ -10,7 +10,7 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
-
+use App\Models\Franchisee;
 
 class User extends Authenticatable
 {
@@ -67,8 +67,8 @@ class User extends Authenticatable
         ];
     }
 
-    public function franchises()
+    public function franchisees()
     {
-        return $this->belongsToMany(Franchisee::class);
+       return $this->belongsToMany(\App\Models\Franchisee::class, 'franchise_user');
     }
 }

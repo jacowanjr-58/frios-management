@@ -1,5 +1,7 @@
 <?php
 
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\{FranchiseeController, InventoryController, CaseBatchController,
@@ -51,7 +53,13 @@ Route::middleware(['auth'])->get('/admin/permissions/editor/{role}', function ($
      // franchise_staff-only routes...
  });
 
+Route::get('/permissions', function () {
+    $roles = Role::all();
+    $permissions = Permission::all();
+    return view('permissions', compact('roles', 'permissions'));
+})->middleware('auth');
 
+Route::post('/permissions/update-matrix', [PermissionMatrixController::class, 'update'])->middleware('auth');
 
 Route::middleware(['auth'])->group(function(){
     Route::resources([

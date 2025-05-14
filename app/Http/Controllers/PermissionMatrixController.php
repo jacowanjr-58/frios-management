@@ -8,61 +8,23 @@ use Spatie\Permission\Models\Permission;
 
 class PermissionMatrixController extends Controller
 {
-    public function superIndex()
+    public function update(Request $request)
     {
-        return $this->loadViewFor('corporate_admin');
-    }
+        $data = $request->validate([
+            'permissions' => 'required|array',
+            'permissions.*.role' => 'required|string|exists:roles,name',
+            'permissions.*.permission' => 'required|string|exists:permissions,name',
+        ]);
 
-    public function superUpdate(Request $request)
-    {
-        return $this->handleUpdate($request, 'corporate_admin');
-    }
+        foreach (Role::all() as $role) {
+            $newPermissions = collect($data['permissions'])
+                ->where('role', $role->name)
+                ->pluck('permission')
+                ->toArray();
 
-    public function corporateIndex()
-    {
-        return $this->loadViewFor('franchise_admin');
-    }
+            $role->syncPermissions($newPermissions);
+        }
 
-    public function corporateUpdate(Request $request)
-    {
-        return $this->handleUpdate($request, 'franchise_admin');
-    }
-
-    public function franchiseIndex()
-    {
-        return $this->loadViewFor('franchise_manager');
-    }
-
-    public function franchiseUpdate(Request $request)
-    {
-        return $this->handleUpdate($request, 'franchise_manager');
-    }
-
-    public function staffIndex()
-    {
-        return $this->loadViewFor('franchise_staff');
-    }
-
-    public function staffUpdate(Request $request)
-    {
-        return $this->handleUpdate($request, 'franchise_staff');
-    }
-
-    protected function loadViewFor($roleName)
-    {
-        $role = Role::where('name', $roleName)->firstOrFail();
-        $permissions = Permission::all();
-        $rolePermissions = $role->permissions->pluck('name')->toArray();
-
-        return view('admin.permissions.matrix', compact('role', 'permissions', 'rolePermissions'));
-    }
-
-    protected function handleUpdate(Request $request, $roleName)
-    {
-        $role = Role::where('name', $roleName)->firstOrFail();
-        $permissions = $request->input('permissions', []);
-        $role->syncPermissions($permissions);
-
-        return redirect()->back()->with('success', 'Permissions updated successfully.');
+        return response()->json(['status' => 'success']);
     }
 }
