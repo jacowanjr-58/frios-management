@@ -71,4 +71,10 @@ class User extends Authenticatable
     {
        return $this->belongsToMany(\App\Models\Franchisee::class, 'franchise_user');
     }
+
+    public function roleRequest()
+{
+    return $this->hasOne(\App\Models\RoleRequest::class);
+}
+
 }

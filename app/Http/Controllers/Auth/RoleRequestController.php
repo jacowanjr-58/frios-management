@@ -10,19 +10,28 @@ use Spatie\Permission\Models\Role;
 
 class RoleRequestController extends Controller
 {
-    public function showRequestForm() {
+    public function index()
+{
+    $pending = \App\Models\RoleRequest::with('user')->where('status', 'pending')->get();
+    return view('auth.role_approvals', compact('pending'));
+}
+
+    public function showRequestForm()
+    {
         $roles = Role::where('name', '!=', 'super_admin')->pluck('name');
         $franchisees = \App\Models\Franchisee::all();
         return view('auth.role_request', compact('roles', 'franchisees'));
     }
 
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         $request->validate([
             'desired_role' => 'required|string|exists:roles,name',
-            'franchisee_ids' => 'nullable|array'
+            'franchisee_ids' => 'required|array|min:1',
+            'franchisee_ids.*' => 'exists:franchisees,id',
         ]);
 
-        \App\Models\RoleRequest::updateOrCreate(
+        RoleRequest::updateOrCreate(
             ['user_id' => auth()->id()],
             [
                 'desired_role' => $request->desired_role,
@@ -32,26 +41,5 @@ class RoleRequestController extends Controller
         );
 
         return redirect('/')->with('message', 'Role request submitted and pending approval.');
-    }
-
-    public function approve(\App\Models\RoleRequest $roleRequest) {
-        $user = $roleRequest->user;
-        $user->syncRoles([$roleRequest->desired_role]);
-        $user->franchisees()->sync(json_decode($roleRequest->franchisee_ids));
-        $roleRequest->status = 'approved';
-        $roleRequest->save();
-
-        return back()->with('message', 'User approved.');
-    }
-
-    public function reject(\App\Models\RoleRequest $roleRequest) {
-        $roleRequest->status = 'rejected';
-        $roleRequest->save();
-        return back()->with('message', 'User rejected.');
-    }
-
-    public function delete(User $user) {
-        $user->delete();
-        return back()->with('message', 'User deleted.');
     }
 }
