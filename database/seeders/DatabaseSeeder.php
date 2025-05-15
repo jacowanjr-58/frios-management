@@ -24,7 +24,9 @@ class DatabaseSeeder extends Seeder
     $this->call(FranchiseeAdminSeeder::class);
     $this->call(FlavorCategorySeeder::class);
 
-
+    $corporate = \App\Models\Franchisee::firstOrCreate([
+        'name' => 'Corporate',
+    ]);
 
     }
 }

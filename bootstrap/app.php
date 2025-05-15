@@ -19,14 +19,19 @@ return Application::configure(basePath: dirname(__DIR__))
             'role' => RoleMiddleware::class,
         ]);
 
-        // ① OPTION A: Add it to the 'web' group only:
-        $middleware->group('web', [
-            DevAuthBypass::class,
-        ]);
+        return [
+            \Illuminate\Cookie\Middleware\EncryptCookies::class,
+            \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
+            \Illuminate\Session\Middleware\StartSession::class,
+            \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+            \Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class,
 
-        // — or —
-        // ② OPTION B: Make it run globally on every HTTP request:
-        // $middleware->global(DevAuthBypass::class);
+            \Illuminate\Routing\Middleware\SubstituteBindings::class,
+
+            // ✅ Place your custom middleware **after session is available**
+            \App\Http\Middleware\DevAuthBypass::class,
+            \App\Http\Middleware\CheckUserSetup::class,
+        ];
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

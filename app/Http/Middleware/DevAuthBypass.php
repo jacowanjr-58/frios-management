@@ -5,6 +5,9 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class DevAuthBypass
 {
@@ -13,13 +16,19 @@ class DevAuthBypass
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle($request, Closure $next)
-    {
-        // only when BYPASS_AUTH=true in your .env
-        if (env('BYPASS_AUTH', false)) {
-            Auth::loginUsingId((int) env('BYPASS_USER_ID', 1));
-        }
+  public function handle(Request $request, Closure $next)
+{
+    if (env('BYPASS_AUTH') === 'true' && !Auth::check()) {
+        $user = User::find(env('BYPASS_USER_ID'));
 
-        return $next($request);
+        if ($user) {
+            Auth::login($user);
+            Log::info("DevAuthBypass: Logged in as {$user->email} ({$user->id})");
+        } else {
+            Log::warning("DevAuthBypass: User ID " . env('BYPASS_USER_ID') . " not found.");
+        }
     }
+
+    return $next($request);
+}
 }

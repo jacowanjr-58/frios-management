@@ -6,6 +6,16 @@
 </head>
 <body>
     <h2>Request Access Role</h2>
+
+    <div class="bg-gray-100 p-4 mb-4 rounded shadow">
+        <h3 class="text-lg font-bold">Debug Info</h3>
+        <p><strong>User ID:</strong> {{ auth()->user()->id }}</p>
+        <p><strong>Email:</strong> {{ auth()->user()->email }}</p>
+        <p><strong>Name:</strong> {{ auth()->user()->name }}</p>
+        <p><strong>Roles:</strong> {{ auth()->user()->getRoleNames()->implode(', ') }}</p>
+        <p><strong>Franchisees:</strong> {{ auth()->user()->franchisees->pluck('name')->implode(', ') }}</p>
+    </div>
+
     <form method="POST" action="{{ route('role.request.submit') }}">
         @csrf
         <label for="desired_role">Select Desired Role:</label>
