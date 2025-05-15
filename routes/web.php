@@ -10,9 +10,12 @@ use App\Http\Middleware\EnsureFranchiseSelected;
 | These routes are grouped by authentication, franchise selection, and role.
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Google Auth Routes
+Route::get('/auth/google/redirect', [App\Http\Controllers\Auth\GoogleLoginController::class, 'redirectToGoogle'])->name('auth.google.redirect');
+Route::get('/auth/google/callback', [App\Http\Controllers\Auth\GoogleLoginController::class, 'handleGoogleCallback'])->name('auth.google.callback');
+Route::get('/login', fn() => redirect()->route('auth.google.redirect'))->name('login');
+
+
 
 Route::middleware(['auth', 'verified'])->group(function () {
 
@@ -27,29 +30,29 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::middleware(['franchise.selected'])->group(function () {
 
         // Shared Dashboard Route
-        Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
+        //Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
 
         // Super Admin Dashboard
         Route::middleware(['role:super_admin'])->group(function () {
-            Route::get('/dashboard/super', [App\Http\Controllers\SuperDashboardController::class, 'index'])->name('dashboard.super');
+            Route::get('/dashboard/super', [App\Http\Controllers\Dashboard\SuperDashboardController::class, 'index'])->name('dashboard.super');
         });
 
         // Corporate Admin
         Route::middleware(['role:corporate_admin'])->group(function () {
             Route::resource('franchisees', App\Http\Controllers\FranchiseeController::class);
-            Route::get('/dashboard/corporate', [App\Http\Controllers\CorporateDashboardController::class, 'index'])->name('dashboard.corporate');
+            Route::get('/dashboard/corporate', [App\Http\Controllers\Dashboard\CorporateDashboardController::class, 'index'])->name('dashboard.corporate');
         });
 
         // Franchise Admin + Manager
         Route::middleware(['role:franchise_admin|franchise_manager'])->group(function () {
             Route::resource('inventories', App\Http\Controllers\InventoryController::class);
             Route::resource('events', App\Http\Controllers\EventController::class);
-            Route::get('/dashboard/franchise', [App\Http\Controllers\FranchiseDashboardController::class, 'index'])->name('dashboard.franchise');
+            Route::get('/dashboard/franchise', [App\Http\Controllers\Dashboard\FranchiseDashboardController::class, 'index'])->name('dashboard.franchise');
         });
 
         // Franchise Staff
         Route::middleware(['role:franchise_staff'])->group(function () {
-            Route::get('/dashboard/staff', [App\Http\Controllers\StaffDashboardController::class, 'index'])->name('dashboard.staff');
+            Route::get('/dashboard/staff', [App\Http\Controllers\Dashboard\StaffDashboardController::class, 'index'])->name('dashboard.staff');
         });
 
         // Global shared resources
@@ -59,9 +62,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 });
 
-// Google Auth Routes
-Route::get('/auth/google/redirect', [App\Http\Controllers\Auth\GoogleLoginController::class, 'redirectToGoogle'])->name('auth.google.redirect');
-Route::get('/auth/google/callback', [App\Http\Controllers\Auth\GoogleLoginController::class, 'handleGoogleCallback'])->name('auth.google.callback');
 
 // Profile (Jetstream)
 Route::middleware(['auth:sanctum', 'verified'])->get('/user/profile', function () {
