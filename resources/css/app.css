@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-[x-cloak] {
-    display: none;
+/* optional: brand colors */
+:root {
+  --brand-primary: #1d4ed8;
+  --brand-dark:   #0f172a;
 }
