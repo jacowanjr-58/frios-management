@@ -1,104 +1,69 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\FranchiseeController;
-use App\Http\Controllers\InventoryLocationController;
-use App\Http\Controllers\InventoryController;
-use App\Http\Controllers\CaseBatchController;
-use App\Http\Controllers\FlavorController;
-use App\Http\Controllers\FlavorCategoryController;
-use App\Http\Controllers\FlavorCategoryOptionController;
-use App\Http\Controllers\RestockOrderController;
-use App\Http\Controllers\RestockOrderItemController;
-use App\Http\Controllers\AdditionalChargeController;
-use App\Http\Controllers\InvoiceController;
-use App\Http\Controllers\InvoiceItemController;
-use App\Http\Controllers\PosSaleController;
-use App\Http\Controllers\PosSaleItemController;
-use App\Http\Controllers\EventController;
-use App\Http\Controllers\Dashboard\SuperDashboardController;
-use App\Http\Controllers\Dashboard\CorporateDashboardController;
-use App\Http\Controllers\Dashboard\FranchiseDashboardController;
-use App\Http\Controllers\Dashboard\ManagerDashboardController;
-use App\Http\Controllers\Dashboard\StaffDashboardController;
+use App\Http\Middleware\EnsureFranchiseSelected;
 
-use App\Http\Controllers\SocialPostController;
-use App\Http\Controllers\InstagramOnboardingController;
-use App\Http\Livewire\SocialPostScheduler;
-use App\Http\Controllers\PermissionMatrixController;
-use App\Http\Controllers\Auth\GoogleLoginController;
-use App\Http\Controllers\Auth\RoleRequestController;
-use Laravel\Socialite\Facades\Socialite;
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+| These routes are grouped by authentication, franchise selection, and role.
+*/
 
-
-
-Route::middleware(['web'])->group(function () {
-
-    //if I want to skip initial Google click page
-    // Route::get('/login', fn() => redirect()->route('auth.google.redirect'));
-    Route::get('/auth/google/redirect', [GoogleLoginController::class, 'redirectToGoogle'])->name('auth.google.redirect');
-    Route::get('/auth/google/callback', [GoogleLoginController::class, 'handleGoogleCallback'])->name('auth.google.callback');
+Route::get('/', function () {
+    return view('welcome');
 });
 
+Route::middleware(['auth', 'verified'])->group(function () {
 
+    // Role Request and Approval Flow
+    Route::get('/role/request', [App\Http\Controllers\Auth\RoleRequestController::class, 'create'])->name('role.request');
+    Route::post('/role/request', [App\Http\Controllers\Auth\RoleRequestController::class, 'store'])->name('role.request.store');
+    Route::get('/role/approvals', [App\Http\Controllers\Auth\RoleRequestController::class, 'index'])->name('role.approvals');
+    Route::post('/role/approvals/{request}/approve', [App\Http\Controllers\Auth\RoleRequestController::class, 'approve'])->name('role.approvals.approve');
+    Route::post('/role/approvals/{request}/reject', [App\Http\Controllers\Auth\RoleRequestController::class, 'reject'])->name('role.approvals.reject');
 
-Route::middleware(['auth'])->group(function () {
+    // Franchise-scoped logic
+    Route::middleware(['franchise.selected'])->group(function () {
 
-    Route::get('/dashboard/super', [SuperDashboardController::class, 'index'])->name('dashboard.super');
-    Route::get('/dashboard/corporate', [CorporateDashboardController::class, 'index'])->name('dashboard.corporate');
-    Route::get('/dashboard/franchise', [FranchiseDashboardController::class, 'index'])->name('dashboard.franchise');
-    Route::get('/dashboard/manager', [ManagerDashboardController::class, 'index'])->name('dashboard.manager');
-    Route::get('/dashboard/staff', [StaffDashboardController::class, 'index'])->name('dashboard.staff');
-    // Bulk-register all your resource controllers
-    Route::resources([
-        'users'               => UserController::class,
-        'franchisees'         => FranchiseeController::class,
-        'locations'           => InventoryLocationController::class,
-        'inventories'         => InventoryController::class,
-        'case-batches'        => CaseBatchController::class,
-        'flavors'             => FlavorController::class,
-        'flavor-categories'   => FlavorCategoryController::class,
-        'flavor-options'      => FlavorCategoryOptionController::class,
-        'restock-orders'      => RestockOrderController::class,
-        'restock-items'       => RestockOrderItemController::class,
-        'additional-charges'  => AdditionalChargeController::class,
-        'invoices'            => InvoiceController::class,
-        'invoice-items'       => InvoiceItemController::class,
-        'pos-sales'           => PosSaleController::class,
-        'pos-items'           => PosSaleItemController::class,
-        'events'              => EventController::class,
-    ]);
+        // Shared Dashboard Route
+        Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
 
-    // Social Posts CRUD
-    Route::get('social-posts',          [SocialPostController::class, 'index'])->name('social_posts.index');
-    Route::get('social-posts/create',   [SocialPostController::class, 'create'])->name('social_posts.create');
-    Route::post('social-posts',         [SocialPostController::class, 'store'])->name('social_posts.store');
+        // Super Admin Dashboard
+        Route::middleware(['role:super_admin'])->group(function () {
+            Route::get('/dashboard/super', [App\Http\Controllers\SuperDashboardController::class, 'index'])->name('dashboard.super');
+        });
 
-    // Instagram OAuth Onboarding
-    Route::get('instagram/redirect',    [InstagramOnboardingController::class, 'redirect'])->name('instagram.redirect');
-    Route::get('instagram/callback',    [InstagramOnboardingController::class, 'callback'])->name('instagram.callback');
+        // Corporate Admin
+        Route::middleware(['role:corporate_admin'])->group(function () {
+            Route::resource('franchisees', App\Http\Controllers\FranchiseeController::class);
+            Route::get('/dashboard/corporate', [App\Http\Controllers\CorporateDashboardController::class, 'index'])->name('dashboard.corporate');
+        });
 
-    // show the Livewire scheduler in a simple Blade wrapper
-    Route::get('schedule-post', function () {return view('schedule-post'); })->middleware('auth')->name('schedule.post');
+        // Franchise Admin + Manager
+        Route::middleware(['role:franchise_admin|franchise_manager'])->group(function () {
+            Route::resource('inventories', App\Http\Controllers\InventoryController::class);
+            Route::resource('events', App\Http\Controllers\EventController::class);
+            Route::get('/dashboard/franchise', [App\Http\Controllers\FranchiseDashboardController::class, 'index'])->name('dashboard.franchise');
+        });
 
+        // Franchise Staff
+        Route::middleware(['role:franchise_staff'])->group(function () {
+            Route::get('/dashboard/staff', [App\Http\Controllers\StaffDashboardController::class, 'index'])->name('dashboard.staff');
+        });
 
-    Route::get('/permissions', [PermissionMatrixController::class, 'index'])->name('permissions');
-    Route::get('/permissions/user/{user}', [PermissionMatrixController::class, 'userPermissions']);
-    Route::post('/permissions/update-matrix', [PermissionMatrixController::class, 'update']);
-
-
-    Route::get('/role/approvals', [RoleRequestController::class, 'index'])->name('role.approvals');
-    Route::get('/role/request', [RoleRequestController::class, 'showRequestForm'])->name('role.request');
-    Route::post('/role/request', [RoleRequestController::class, 'store'])->name('role.request.submit');
+        // Global shared resources
+        Route::get('/permissions', [App\Http\Controllers\PermissionMatrixController::class, 'index'])->name('permissions');
+        Route::post('/permissions/update-matrix', [App\Http\Controllers\PermissionMatrixController::class, 'update'])->name('permissions.update');
+        Route::get('/permissions/user/{user}', [App\Http\Controllers\PermissionMatrixController::class, 'userPermissions'])->name('permissions.user');
+    });
 });
 
+// Google Auth Routes
+Route::get('/auth/google/redirect', [App\Http\Controllers\Auth\GoogleLoginController::class, 'redirectToGoogle'])->name('auth.google.redirect');
+Route::get('/auth/google/callback', [App\Http\Controllers\Auth\GoogleLoginController::class, 'handleGoogleCallback'])->name('auth.google.callback');
 
-
-
-
-Route::get('/test-socialite', function () {
-    return Socialite::driver('google')->stateless()->redirect();
-});
-
-
+// Profile (Jetstream)
+Route::middleware(['auth:sanctum', 'verified'])->get('/user/profile', function () {
+    return view('profile.show');
+})->name('profile.show');

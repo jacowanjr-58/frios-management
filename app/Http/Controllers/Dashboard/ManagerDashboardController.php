@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\FranchiseScopedController;
 use Illuminate\Http\Request;
-
-class ManagerDashboardController extends Controller
+use Illuminate\Support\Facades\Auth;
+class ManagerDashboardController extends FranchiseScopedController
 {
     public function index(Request $request)
     {
-        $user = auth()->user();
-        $franchiseId = session('active_franchise_id');
+        $user = Auth::user();
+        $franchiseId =  $this->getFranchiseId();
 
         // 🧠 Scoped model loading example:
         // $orders = \App\Models\Order::where('franchisee_id', $franchiseId)->latest()->take(10)->get();

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\WorkSession;
 use Illuminate\Http\Request;
 
-class WorkSessionController extends Controller
+class WorkSessionController extends FranchiseScopedController
 {
     /**
      * Display a listing of the resource.

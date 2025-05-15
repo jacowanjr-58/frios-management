@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\SocialPost;
 use Illuminate\Http\Request;
 
-class SocialPostController extends Controller
+class SocialPostController extends FranchiseScopedController
 {
     public function index()
     {

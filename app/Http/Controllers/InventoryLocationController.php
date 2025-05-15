@@ -8,7 +8,7 @@ use App\Http\Requests\StoreInventoryLocationRequest;
 use App\Http\Requests\UpdateInventoryLocationRequest;
 use Illuminate\Support\Facades\Auth;
 
-class InventoryLocationController extends Controller
+class InventoryLocationController extends FranchiseScopedController
 {
     /**
      * Display a listing of inventory locations.

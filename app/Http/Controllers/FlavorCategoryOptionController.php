@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\FlavorCategoryOption;
 use Illuminate\Http\Request;
 
-class FlavorCategoryOptionController extends Controller
+class FlavorCategoryOptionController extends FranchiseScopedController
 {
     /**
      * Display a listing of the resource.

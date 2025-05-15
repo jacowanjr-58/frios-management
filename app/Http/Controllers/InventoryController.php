@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Inventory;
 use Illuminate\Http\Request;
 
-class InventoryController extends Controller
+class InventoryController extends FranchiseScopedController
 {
     /**
      * Display a listing of the resource.

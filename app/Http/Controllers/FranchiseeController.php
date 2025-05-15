@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Franchisee;
 use Illuminate\Http\Request;
 
-class FranchiseeController extends Controller
+class FranchiseeController extends FranchiseScopedController
 {
     /**
      * Display a listing of the resource.

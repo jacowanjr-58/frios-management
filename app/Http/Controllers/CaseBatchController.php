@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\CaseBatch;
 use Illuminate\Http\Request;
 
-class CaseBatchController extends Controller
+class CaseBatchController extends FranchiseScopedController
 {
     /**
      * Display a listing of the resource.

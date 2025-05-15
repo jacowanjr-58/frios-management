@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\TerritoryZip;
 use Illuminate\Http\Request;
 
-class TerritoryZipController extends Controller
+class TerritoryZipController extends FranchiseScopedController
 {
     /**
      * Display a listing of the resource.

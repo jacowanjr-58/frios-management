@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\EventAllocation;
 use Illuminate\Http\Request;
 
-class EventAllocationController extends Controller
+class EventAllocationController extends FranchiseScopedController
 {
     /**
      * Display a listing of the resource.

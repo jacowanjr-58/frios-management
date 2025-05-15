@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\AdditionalCharge;
 use Illuminate\Http\Request;
 
-class AdditionalChargeController extends Controller
+class AdditionalChargeController extends FranchiseScopedController
 {
     /**
      * Display a listing of the resource.

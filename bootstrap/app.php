@@ -5,6 +5,8 @@ use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Spatie\Permission\Middleware\RoleMiddleware;
 use App\Http\Middleware\DevAuthBypass;  // ← import your middleware
+use App\Http\Middleware\EnsureFranchiseSelected;
+
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -17,6 +19,7 @@ return Application::configure(basePath: dirname(__DIR__))
         // Alias the Spatie role middleware
         $middleware->alias([
             'role' => RoleMiddleware::class,
+            'franchise.selected' => EnsureFranchiseSelected::class,
         ]);
 
         return [

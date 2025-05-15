@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\PosSaleItem;
 use Illuminate\Http\Request;
 
-class PosSaleItemController extends Controller
+class PosSaleItemController extends FranchiseScopedController
 {
     /**
      * Display a listing of the resource.

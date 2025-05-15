@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\ExpenseSubCategory;
 use Illuminate\Http\Request;
 
-class ExpenseSubCategoryController extends Controller
+class ExpenseSubCategoryController extends FranchiseScopedController
 {
     /**
      * Display a listing of the resource.

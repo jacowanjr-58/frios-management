@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\RestockOrderItem;
 use Illuminate\Http\Request;
 
-class RestockOrderItemController extends Controller
+class RestockOrderItemController extends FranchiseScopedController
 {
     /**
      * Display a listing of the resource.
