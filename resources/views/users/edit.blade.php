@@ -1,30 +1,15 @@
-﻿@extends('layouts.app')
+@extends('layouts.app')
+
+@section('title','Edit User')
 
 @section('content')
-<form action="{{ route('users.store') }}" method="POST">
-  @csrf
-
-  <!-- Name, Email, Password fields… -->
-
-  <div class="mb-3">
-    <label for="franchisee_id" class="form-label">Franchise</label>
-    <multiselect name="franchisee_id" id="franchisee_id" class="form-multiselect @error('franchisee_id') is-invalid @enderror">
-      <option value="">— Select Franchise —</option>
-      @foreach($franchises as $fr)
-        <option value="{{ $fr->id }}"
-          {{ old('franchisee_id') == $fr->id ? 'selected' : '' }}>
-          {{ $fr->name }}
-        </option>
-      @endforeach
-    </multiselect>
-    @error('franchisee_id')
-      <div class="invalid-feedback">{{ $message }}</div>
-    @enderror
-  </div>
-
-  <!-- Role field… -->
-
-  <button type="submit" class="btn btn-primary">Save</button>
-</form>
+<div class="card">
+  <h1 class="mb-4">Edit User</h1>
+  <form action="{ route('users.update', ${singular}) }" method="POST">
+    @csrf
+    @method('PUT')
+    <!-- TODO: Add form fields prefilled with ${singular} data -->
+    <button type="submit" class="btn btn-primary mt-2">Update</button>
+  </form>
+</div>
 @endsection
-

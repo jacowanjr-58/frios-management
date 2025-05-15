@@ -1,5 +1,15 @@
-﻿@extends('layouts.app')
+@extends('layouts.app')
+
+@section('title','Edit Invoice')
 
 @section('content')
-    <h1>invoices edit</h1>
+<div class="card">
+  <h1 class="mb-4">Edit Invoice</h1>
+  <form action="{ route('invoices.update', ${singular}) }" method="POST">
+    @csrf
+    @method('PUT')
+    <!-- TODO: Add form fields prefilled with ${singular} data -->
+    <button type="submit" class="btn btn-primary mt-2">Update</button>
+  </form>
+</div>
 @endsection

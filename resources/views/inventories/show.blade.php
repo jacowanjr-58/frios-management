@@ -1,5 +1,11 @@
-﻿@extends('layouts.app')
+@extends('layouts.app')
+
+@section('title','View Inventorie')
 
 @section('content')
-    <h1>inventories show</h1>
+<div class="card">
+  <h1 class="mb-4">Inventorie Details</h1>
+  <!-- TODO: Display {singular} details -->
+  <a href="{ route('inventories.index') }" class="btn btn-secondary mt-2">Back to List</a>
+</div>
 @endsection
