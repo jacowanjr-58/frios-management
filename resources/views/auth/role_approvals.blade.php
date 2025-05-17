@@ -18,25 +18,23 @@
             </tr>
         </thead>
         <tbody>
-            @foreach($pending as $request)
-                <tr>
-                    <td>{{ $request->user->name }}</td>
-                    <td>{{ $request->user->email }}</td>
-                    <td>{{ $request->desired_role }}</td>
-                    <td>{{ implode(', ', $request->franchisee_ids ?? []) }}</td>
-                    <td>{{ $request->status }}</td>
-                    <td>
-                        <form method="POST" action="{{ route('role.approve', $request) }}" style="display:inline;">
-                            @csrf
-                            <button type="submit">Approve</button>
-                        </form>
-                        <form method="POST" action="{{ route('role.reject', $request) }}" style="display:inline;">
-                            @csrf
-                            <button type="submit">Reject</button>
-                        </form>
-                    </td>
-                </tr>
-            @endforeach
+         @foreach($pendingRequests as $request)
+                    <tr>
+                        <td>{{ $request->user->name }}</td>
+                        <td>{{ $request->desired_role }}</td>
+                        <td>{{ $request->franchisees->pluck('name')->join(', ') }}</td>
+                        <td>
+                            <form method="POST" action="{{ route('role.approvals.approve', $request) }}">
+                                @csrf
+                                <button type="submit">Approve</button>
+                            </form>
+                            <form method="POST" action="{{ route('role.approvals.reject', $request) }}">
+                                @csrf
+                                <button type="submit">Reject</button>
+                            </form>
+                        </td>
+                    </tr>
+        @endforeach
         </tbody>
     </table>
 </body>

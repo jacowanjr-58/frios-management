@@ -7,14 +7,14 @@
 <body>
     <h2>Request Access Role</h2>
 
-    <div class="bg-gray-100 p-4 mb-4 rounded shadow">
+   {{--  <div class="bg-gray-100 p-4 mb-4 rounded shadow">
         <h3 class="text-lg font-bold">Debug Info</h3>
         <p><strong>User ID:</strong> {{ auth()->user()->id }}</p>
         <p><strong>Email:</strong> {{ auth()->user()->email }}</p>
         <p><strong>Name:</strong> {{ auth()->user()->name }}</p>
         <p><strong>Roles:</strong> {{ auth()->user()->getRoleNames()->implode(', ') }}</p>
         <p><strong>Franchisees:</strong> {{ auth()->user()->franchisees->pluck('name')->implode(', ') }}</p>
-    </div>
+    </div> --}}
 
     <form method="POST" action="{{ route('role.request.submit') }}">
         @csrf
@@ -28,11 +28,19 @@
         </select>
 
         <label for="franchisee_ids">Select Franchise(s):</label>
-        <select name="franchisee_ids[]" id="franchisee_ids" required>
-            @foreach($franchisees as $franchisee)
-                <option value="{{ $franchisee->id }}">{{ $franchisee->name }}</option>
-            @endforeach
-        </select>
+        @if(old('desired_role') === 'franchise_admin')
+            <select name="franchisee_ids[]" multiple class="form-control">
+                @foreach($franchisees as $franchise)
+                <option value="{{ $franchise->id }}">{{ $franchise->name }}</option>
+                @endforeach
+            </select>
+         @else
+            <select name="franchisee_ids[]" class="form-control">
+                @foreach($franchisees as $franchise)
+                <option value="{{ $franchise->id }}">{{ $franchise->name }}</option>
+                @endforeach
+            </select>
+         @endif
 
         <button type="submit">Submit Request</button>
     </form>

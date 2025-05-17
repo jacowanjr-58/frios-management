@@ -40,7 +40,12 @@ class GoogleLoginController extends Controller
             abort(403, 'Simulated user not found. Check BYPASS_USER_ID.');
         }
 
-        \Illuminate\Support\Facades\Auth::login($user);
+      Auth::login($user);
+
+         // 🧠 Route to role request if user lacks role or franchise
+        if ($user->roles->isEmpty() || $user->franchisees->isEmpty()) {
+            return redirect()->route('role.request');
+        }
         return $this->redirectToDashboard($user);
     }
 
@@ -54,9 +59,8 @@ class GoogleLoginController extends Controller
     public function handleGoogleCallback()
 {
 
-
-    // ✅ Dev Bypass Mode (Simulated user login for local testing)
-    if (env('BYPASS_AUTH') === 'true' && env('BYPASS_USER_ID')) {
+    //* / ✅ Dev Bypass Mode (Simulated user login for local testing)
+   /*  if (env('BYPASS_AUTH') === 'true' && env('BYPASS_USER_ID')) {
         $user = User::find(env('BYPASS_USER_ID'));
 
         if (! $user) {
@@ -64,8 +68,12 @@ class GoogleLoginController extends Controller
         }
 
         Auth::login($user);
-        return redirect()->intended('/');
-    }
+           // 🧠 Route to role request if user lacks role or franchise
+        if ($user->roles->isEmpty() || $user->franchisees->isEmpty()) {
+            return redirect()->route('role.request');
+        }
+        return $this->redirectToDashboard($user);
+    } */ 
 
     // ✅ Real Google OAuth Flow
     $googleUser = Socialite::driver('google')->user();

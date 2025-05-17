@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\EnsureFranchiseSelected;
-
+use App\Http\Controllers\Auth\RoleRequestController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,16 +15,15 @@ Route::get('/auth/google/redirect', [App\Http\Controllers\Auth\GoogleLoginContro
 Route::get('/auth/google/callback', [App\Http\Controllers\Auth\GoogleLoginController::class, 'handleGoogleCallback'])->name('auth.google.callback');
 Route::get('/login', fn() => redirect()->route('auth.google.redirect'))->name('login');
 
+Route::middleware(['auth'])->group(function () {
+    Route::get('/role/request', [RoleRequestController::class, 'create'])->name('role.request');
+    Route::post('/role/request', [RoleRequestController::class, 'store'])->name('role.request.store');
 
-
-Route::middleware(['auth', 'verified'])->group(function () {
-
-    // Role Request and Approval Flow
-    Route::get('/role/request', [App\Http\Controllers\Auth\RoleRequestController::class, 'create'])->name('role.request');
-    Route::post('/role/request', [App\Http\Controllers\Auth\RoleRequestController::class, 'store'])->name('role.request.store');
-    Route::get('/role/approvals', [App\Http\Controllers\Auth\RoleRequestController::class, 'index'])->name('role.approvals');
-    Route::post('/role/approvals/{request}/approve', [App\Http\Controllers\Auth\RoleRequestController::class, 'approve'])->name('role.approvals.approve');
-    Route::post('/role/approvals/{request}/reject', [App\Http\Controllers\Auth\RoleRequestController::class, 'reject'])->name('role.approvals.reject');
+    Route::middleware(['role:super_admin|corporate_admin|franchise_admin|franchise_manager'])->group(function () {
+        Route::get('/role/approvals', [RoleRequestController::class, 'index'])->name('role.approvals');
+        Route::post('/role/approvals/{request}/approve', [RoleRequestController::class, 'approve'])->name('role.approvals.approve');
+        Route::post('/role/approvals/{request}/reject', [RoleRequestController::class, 'reject'])->name('role.approvals.reject');
+    });
 
     // Franchise-scoped logic
     Route::middleware(['franchise.selected'])->group(function () {

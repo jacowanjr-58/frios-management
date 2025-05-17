@@ -10,10 +10,14 @@ class EnsureFranchiseSelected
 {
     public function handle(Request $request, Closure $next): Response
     {
-        if (auth()->check() && auth()->user()->franchisees->count() > 1 && !session()->has('active_franchise_id')) {
-            return redirect()->route('role.request')->withErrors('Please select a franchise.');
-        }
+            if ($user->franchisees->count() >= 1) {
+        session(['active_franchise_id' => $user->franchisees->first()->id]);
+    } elseif (! session('active_franchise_id')) {
+        return redirect()->route('franchise.switcher');
+    }
 
         return $next($request);
     }
 }
+
+
