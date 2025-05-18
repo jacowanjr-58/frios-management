@@ -33,10 +33,10 @@ class EnsureFranchiseSelected
             return redirect()->route('franchise.switcher');
         }
 
-        // 4) (Optional) If they have zero franchises, you could redirect or abort here
-        // if ($user && $user->franchisees()->count() === 0) {
-        //     return redirect()->route('no-franchises-setup');
-        // }
+         // 4) (Optional) If they have zero franchises, you could redirect or abort here
+         if ($user && $user->franchisees()->count() === 0) {
+            return redirect()->route('role.request');
+        }
 
         return $next($request);
     }

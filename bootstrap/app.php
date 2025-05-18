@@ -1,46 +1,49 @@
 <?php
 
 use Illuminate\Foundation\Application;
-use Illuminate\Foundation\Configuration\Exceptions;
-use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Routing\Middleware\SubstituteBindings;
+use Illuminate\Session\Middleware\StartSession;
+use Illuminate\Cookie\Middleware\EncryptCookies;
+use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
+use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
+
+
+use App\Http\Middleware\CheckUserSetup;
+use App\Http\Middleware\EnsureFranchiseSelected;
+
 use Spatie\Permission\Middleware\RoleMiddleware;
 use Spatie\Permission\Middleware\PermissionMiddleware;
 use Spatie\Permission\Middleware\RoleOrPermissionMiddleware;
-use App\Http\Middleware\DevAuthBypass;  // ← import your middleware
-use App\Http\Middleware\EnsureFranchiseSelected;
 
+return Application::configure(
+    basePath: dirname(__DIR__)
+)
+->withRouting(
+    web:      __DIR__ . '/../routes/web.php',
+    api:      __DIR__ . '/../routes/api.php',
+    commands: __DIR__ . '/../routes/console.php',
+    health:   '/up',
+)
+->withMiddleware(function ($middleware) {
+    // 1) Alias your route‐level middleware
+    $middleware->alias([
+        'role'               => RoleMiddleware::class,
+        'permission'         => PermissionMiddleware::class,
+        'role_or_permission' => RoleOrPermissionMiddleware::class,
+        'franchise.selected' => EnsureFranchiseSelected::class,
+        'user_setup'         => CheckUserSetup::class,
+    ]);
 
-return Application::configure(basePath: dirname(__DIR__))
-    ->withRouting(
-        web: __DIR__.'/../routes/web.php',
-        api: __DIR__.'/../routes/api.php',
-        commands: __DIR__.'/../routes/console.php',
-        health: '/up',
-    )
-    ->withMiddleware(function (Middleware $middleware) {
-        // Alias the Spatie role middleware
-        $middleware->alias([
-            'role' => RoleMiddleware::class,
-            'permission' => PermissionMiddleware::class,
-            'role_or_permission' => RoleOrPermissionMiddleware::class,
-            'franchise.selected' => EnsureFranchiseSelected::class,
-        ]);
-
-        return [
-            \Illuminate\Cookie\Middleware\EncryptCookies::class,
-            \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
-            \Illuminate\Session\Middleware\StartSession::class,
-            \Illuminate\View\Middleware\ShareErrorsFromSession::class,
-            \Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class,
-
-            \Illuminate\Routing\Middleware\SubstituteBindings::class,
-
-            // ✅ Place your custom middleware **after session is available**
-            \App\Http\Middleware\DevAuthBypass::class,
-            \App\Http\Middleware\CheckUserSetup::class,
-        ];
-    })
-    ->withExceptions(function (Exceptions $exceptions) {
-        //
-    })->create();
-
+    // 2) Define the "web" group that applies to all routes in routes/web.php
+    $middleware->group('web', [
+        EncryptCookies::class,
+        AddQueuedCookiesToResponse::class,
+        StartSession::class,
+        SubstituteBindings::class,
+        VerifyCsrfToken::class,
+    ]);
+})
+->withExceptions(function ($exceptions) {
+    //
+})
+->create();

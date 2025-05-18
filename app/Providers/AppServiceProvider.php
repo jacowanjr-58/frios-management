@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Gate;
 
 class AppServiceProvider extends ServiceProvider
 {
+
+    protected $policies = [\App\Models\RoleRequest::class => \App\Policies\RoleRequestPolicy::class];
     /**
      * Register any application services.
      */

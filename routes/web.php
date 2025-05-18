@@ -1,68 +1,137 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Middleware\EnsureFranchiseSelected;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Auth\GoogleLoginController;
 use App\Http\Controllers\Auth\RoleRequestController;
+use App\Http\Controllers\Dashboard\SuperDashboardController;
+use App\Http\Controllers\Dashboard\CorporateDashboardController;
+use App\Http\Controllers\Dashboard\FranchiseDashboardController;
+use App\Http\Controllers\Dashboard\StaffDashboardController;
+use App\Http\Controllers\FranchiseeController;
+use App\Http\Controllers\InventoryController;
+use App\Http\Controllers\EventController;
+use App\Http\Controllers\PermissionMatrixController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
-| These routes are grouped by authentication, franchise selection, and role.
+|
+| These routes all get the “web” middleware group (session, CSRF,  etc.)
+| by virtue of your bootstrap/app.php → withMiddleware(…).
+|
 */
 
-// Google Auth Routes
-Route::get('/auth/google/redirect', [App\Http\Controllers\Auth\GoogleLoginController::class, 'redirectToGoogle'])->name('auth.google.redirect');
-Route::get('/auth/google/callback', [App\Http\Controllers\Auth\GoogleLoginController::class, 'handleGoogleCallback'])->name('auth.google.callback');
-Route::get('/login', fn() => redirect()->route('auth.google.redirect'))->name('login');
+// 1) Public / OAuth routes
+Route::get('/auth/google/redirect',  [GoogleLoginController::class, 'redirectToGoogle'])
+     ->name('auth.google.redirect');
 
+Route::get('/auth/google/callback',  [GoogleLoginController::class, 'handleGoogleCallback'])
+     ->name('auth.google.callback');
+
+Route::get('/login', function () {
+
+    if (Auth::check()) {
+        // pick the dashboard that matches your user’s role:
+        if (Auth::user()->hasRole('super_admin')) {
+            return redirect()->route('dashboard.super');
+        }
+        if (Auth::user()->hasRole('corporate_admin')) {
+            return redirect()->route('dashboard.corporate');
+        }
+        if (Auth::user()->hasAnyRole(['franchise_admin','franchise_manager'])) {
+            return redirect()->route('dashboard.franchise');
+        }
+        if (Auth::user()->hasRole('franchise_staff')) {
+            return redirect()->route('dashboard.staff');
+        }
+
+        // fallback:
+        return redirect()->route('dashboard.franchise');
+    }
+
+    // 2) Not logged in yet? Send to Google
+    return redirect()->route('auth.google.redirect');
+})->name('login');
+
+
+
+// ROLE REQUEST FORM (any logged‐in user needs this)
 Route::middleware(['auth'])->group(function () {
-    Route::get('/role/request', [RoleRequestController::class, 'create'])->name('role.request');
-    Route::post('/role/request', [RoleRequestController::class, 'store'])->name('role.request.store');
+    Route::get ('/role/request', [RoleRequestController::class, 'create'])
+         ->name('role.request');
+    Route::post('/role/request', [RoleRequestController::class, 'store'])
+         ->name('role.request.store');
+});
 
-    Route::middleware(['role:super_admin|corporate_admin|franchise_admin|franchise_manager'])->group(function () {
-        Route::get('/role/approvals', [RoleRequestController::class, 'index'])->name('role.approvals');
-        Route::post('/role/approvals/{request}/approve', [RoleRequestController::class, 'approve'])->name('role.approvals.approve');
-        Route::post('/role/approvals/{request}/reject', [RoleRequestController::class, 'reject'])->name('role.approvals.reject');
+// 2) Everything else requires a logged-in user
+Route::middleware(['auth', 'user_setup'])->group(function () {
+
+
+    // 2b) Approvals (only those your Policy allows will actually see & act)
+    Route::prefix('approvals')->name('approvals.')->group(function () {
+        Route::get ('/',                       [RoleRequestController::class, 'index'])
+             ->name('index');
+        Route::post('{roleRequest}/approve',  [RoleRequestController::class, 'approve'])
+             ->name('approve');
+        Route::post('{roleRequest}/reject',   [RoleRequestController::class, 'reject'])
+             ->name('reject');
     });
 
-    // Franchise-scoped logic
+    // 2c) Now everything that needs an active franchise
     Route::middleware(['franchise.selected'])->group(function () {
 
-        // Shared Dashboard Route
-        //Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
+        // Super Admin only
+        Route::middleware('role:super_admin')->get(
+            '/dashboard/super',
+            [SuperDashboardController::class, 'index']
+        )->name('dashboard.super');
 
-        // Super Admin Dashboard
-        Route::middleware(['role:super_admin'])->group(function () {
-            Route::get('/dashboard/super', [App\Http\Controllers\Dashboard\SuperDashboardController::class, 'index'])->name('dashboard.super');
-        });
-
-        // Corporate Admin
-        Route::middleware(['role:corporate_admin'])->group(function () {
-            Route::resource('franchisees', App\Http\Controllers\FranchiseeController::class);
-            Route::get('/dashboard/corporate', [App\Http\Controllers\Dashboard\CorporateDashboardController::class, 'index'])->name('dashboard.corporate');
+        // Corporate Admin only
+        Route::middleware('role:corporate_admin')->group(function () {
+            Route::resource('franchisees', FranchiseeController::class);
+            Route::get(
+                '/dashboard/corporate',
+                [CorporateDashboardController::class, 'index']
+            )->name('dashboard.corporate');
         });
 
         // Franchise Admin + Manager
-        Route::middleware(['role:franchise_admin|franchise_manager'])->group(function () {
-            Route::resource('inventories', App\Http\Controllers\InventoryController::class);
-            Route::resource('events', App\Http\Controllers\EventController::class);
-            Route::get('/dashboard/franchise', [App\Http\Controllers\Dashboard\FranchiseDashboardController::class, 'index'])->name('dashboard.franchise');
+        Route::middleware('role:franchise_admin|franchise_manager')->group(function () {
+            Route::resource('inventories', InventoryController::class);
+            Route::resource('events',      EventController::class);
+            Route::get(
+                '/dashboard/franchise',
+                [FranchiseDashboardController::class, 'index']
+            )->name('dashboard.franchise');
         });
 
-        // Franchise Staff
-        Route::middleware(['role:franchise_staff'])->group(function () {
-            Route::get('/dashboard/staff', [App\Http\Controllers\Dashboard\StaffDashboardController::class, 'index'])->name('dashboard.staff');
-        });
+        // Franchise Staff only
+        Route::middleware('role:franchise_staff')->get(
+            '/dashboard/staff',
+            [StaffDashboardController::class, 'index']
+        )->name('dashboard.staff');
 
-        // Global shared resources
-        Route::get('/permissions', [App\Http\Controllers\PermissionMatrixController::class, 'index'])->name('permissions');
-        Route::post('/permissions/update-matrix', [App\Http\Controllers\PermissionMatrixController::class, 'update'])->name('permissions.update');
-        Route::get('/permissions/user/{user}', [App\Http\Controllers\PermissionMatrixController::class, 'userPermissions'])->name('permissions.user');
+        // Shared permissions‐matrix UI
+        Route::get(
+            '/permissions',
+            [PermissionMatrixController::class, 'index']
+        )->name('permissions');
+        Route::post(
+            '/permissions/update-matrix',
+            [PermissionMatrixController::class, 'update']
+        )->name('permissions.update');
+        Route::get(
+            '/permissions/user/{user}',
+            [PermissionMatrixController::class, 'userPermissions']
+        )->name('permissions.user');
     });
 });
 
 
-// Profile (Jetstream)
-Route::middleware(['auth:sanctum', 'verified'])->get('/user/profile', function () {
-    return view('profile.show');
-})->name('profile.show');
+// 3) (Optional) Jetstream profile
+/* Route::middleware(['auth:sanctum', 'verified'])
+     ->get('/user/profile', fn() => view('profile.show'))
+     ->name('profile.show');
+ */
